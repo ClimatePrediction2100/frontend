@@ -4,13 +4,16 @@ import { getData } from "../api/getData";
 const Simulation = ({ onSubmit }: any) => {
 	const area = [
 		"선택 안함",
-		"대한민국",
-		"미국",
-		"호주",
-		"유럽",
-		"이란",
-		"러시아",
+		"대한민국 서울",
+		"미국 뉴욕",
+		"호주 캔버라",
+		"러시아 모스크바",
+		"이란 테헤란",
+		"일본 도쿄",
+		"중국 베이징",
+		"프랑스 파리",
 	];
+
 	const [selectedArea, setSelectedArea] = useState<string>("");
 
 	const handleAreaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

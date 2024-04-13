@@ -21,7 +21,7 @@ export default function Graph() {
 	);
 	const unit: number[] = [1, 5, 10, 20];
 	const [selectedStartYear, setSelectedStartYear] = useState<number>(1920);
-	const [selectedPeriod, setSelectedPeriod] = useState<number>(20);
+	const [selectedPeriod, setSelectedPeriod] = useState<number>(5);
 	const [selectedView, setSelectedView] = useState<string>("전체 보기");
 
 	const handleStartYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -107,7 +107,7 @@ export default function Graph() {
 				borderColor: "rgb(0, 99, 132)",
 				backgroundColor: "rgba(0, 99, 132, 0.5)",
 				borderWidth: 1,
-				pointRadius: 0,
+				pointRadius: 2,
 			});
 			dataset.push({
 				data: set.low,
