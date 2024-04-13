@@ -25,9 +25,31 @@ export const options = {
 	plugins: {
 		legend: {
 			position: "right" as const,
+			labels: {
+				filter: function (legendItem: any, legend: any) {
+					return legendItem.text !== undefined;
+				},
+			},
+			onClick: (e: any, legendItem: any, legend: any) => {
+				// const index = legendItem.datasetIndex;
+				// const type = legend.chart.config.type;
+				// let ci = legend.chart;
+				// [
+				// 	ci.getDatasetMeta(0),
+				// 	ci.getDatasetMeta(1),
+				// 	ci.getDatasetMeta(2),
+				// ].forEach(function (meta) {
+				// 	meta.hidden =
+				// 		meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+				// });
+				// ci.update()
+			},
 		},
 		tooltip: {
-			enabled: true, // 툴팁 활성화
+			enabled: true,
+			filter: function (item: any, data: any) {
+				return item.label > 2014 || item.datasetIndex === 1;
+			},
 		},
 	},
 };

@@ -95,31 +95,26 @@ export default function Graph() {
 		let dataset: any = [];
 		data.forEach((set: any, index: number) => {
 			dataset.push({
-				label: set.name + "high",
 				data: set.high,
-
-				borderColor: "rgb(255, 99, 132)",
-				backgroundColor: "rgba(255, 99, 132, 0.5)",
-				borderWidth: 1,
-				pointRadius: 0,
+				borderColor: "rgb(0, 99, 132)",
+				backgroundColor: "rgba(0, 99, 132, 0.5)",
+				borderWidth: 0,
+				pointRadius: 2,
 			});
 			dataset.push({
-				label: set.name + "average",
+				label: set.name,
 				data: set.aver,
-
 				borderColor: "rgb(0, 99, 132)",
 				backgroundColor: "rgba(0, 99, 132, 0.5)",
 				borderWidth: 1,
 				pointRadius: 0,
 			});
 			dataset.push({
-				label: set.name + "low",
 				data: set.low,
-
-				borderColor: "rgb(0, 0, 0)",
-				backgroundColor: "rgba(0, 0, 0, 0.5)",
-				borderWidth: 1,
-				pointRadius: 0,
+				borderColor: "rgb(0, 99, 132)",
+				backgroundColor: "rgba(0, 99, 132, 0.5)",
+				borderWidth: 0,
+				pointRadius: 2,
 			});
 		});
 		setGraphData({
