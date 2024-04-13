@@ -148,7 +148,7 @@ const Simulation = ({ onSubmit }: any) => {
 				</div>
 				<button type="submit" className="h-6 mt-auto custom-button"
 					disabled={!selectedArea && (latitude === "" || longitude === "")}>
-					<span className="text-base">확인</span>
+					<span className="text-base">입력 완료</span>
 				</button>
 			</form>
 		</div>
