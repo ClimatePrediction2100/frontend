@@ -1,20 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Filter from "../components/Filter";
 import GraphView from "../components/GraphView";
 import Simulation from "../components/Simulation";
 import SimulationItem from "../components/SimulationItem";
-
+import { getData } from "../api/getData";
+interface TemperatureData {
+	year: number;
+	average?: number;
+	highest?: number;
+	lowest?: number;
+}
 export default function Graph() {
 	/**
 	 * 그래프 관련 상태 및 메소드
 	 */
 	const years: number[] = Array.from(
-		{ length: 2100 - 1900 + 1 },
-		(_, index) => 1900 + index
+		{ length: 2100 - 1850 + 1 },
+		(_, index) => 1850 + index
 	);
 	const unit: number[] = [1, 5, 10, 20];
-	const [selectedStartYear, setSelectedStartYear] = useState<number>(1900);
+	const [selectedStartYear, setSelectedStartYear] = useState<number>(1920);
 	const [selectedPeriod, setSelectedPeriod] = useState<number>(20);
 	const [selectedView, setSelectedView] = useState<string>("전체 보기");
 
@@ -30,44 +36,102 @@ export default function Graph() {
 		setSelectedView(e.target.value);
 	};
 
-	const data = {
-		labels: [
-			"January",
-			"February",
-			"March",
-			"April",
-			"May",
-			"June",
-			"July",
-			"January",
-			"February",
-			"March",
-			"April",
-			"May",
-			"June",
-			"July",
-		],
-		datasets: [
-			{
-				label: "Dataset 1",
-				data: [
-					-500, 750, 200, -300, 400, -150, 250, -500, 750, 200, -300, 400, -150,
-					250,
-				],
+	const [yearList, setYearList] = useState<any>([]);
+	useEffect(() => {
+		const updatedYearList = years.filter(
+			(year) =>
+				(year >= selectedStartYear &&
+					(year - selectedStartYear) % selectedPeriod === 0) ||
+				year === 2100
+		);
+		setYearList(updatedYearList);
+	}, [selectedStartYear, selectedPeriod]);
+
+	const [showData, setShowData] = useState<boolean>(false);
+	const [data, setData] = useState<any>([]);
+	useEffect(() => {
+		const initData = async () => {
+			const requestData = {
+				latitude: 0,
+				longitude: 0,
+				ssp: 1,
+				season: 1,
+			};
+			const response = await getData("temperature", requestData);
+
+			// 필터링 로직 적용
+			const filterDataByYear = (
+				data: TemperatureData[],
+				key: keyof TemperatureData
+			): any[] => {
+				return data
+					.filter(({ year }) => yearList.includes(year))
+					.map(({ [key]: value }) => value as number);
+			};
+
+			const high: any[] = [
+				...filterDataByYear(response.observeds, "average"),
+				...filterDataByYear(response.predicteds, "highest"),
+			];
+			const aver: any[] = [
+				...filterDataByYear(response.observeds, "average"),
+				...filterDataByYear(response.predicteds, "average"),
+			];
+			const low: any[] = [
+				...filterDataByYear(response.observeds, "average"),
+				...filterDataByYear(response.predicteds, "lowest"),
+			];
+			const name = "대한민국";
+			setData([{ name, high, aver, low }]);
+		};
+
+		if (yearList.length > 0) {
+			initData();
+		}
+	}, [yearList]);
+
+	const [graphData, setGraphData] = useState<any>({});
+	useEffect(() => {
+		let dataset: any = [];
+		data.forEach((set: any, index: number) => {
+			dataset.push({
+				label: set.name + "high",
+				data: set.high,
+
 				borderColor: "rgb(255, 99, 132)",
 				backgroundColor: "rgba(255, 99, 132, 0.5)",
-			},
-			{
-				label: "Dataset 2",
-				data: [
-					200, 450, -400, 300, -650, 100, 900, -500, 750, 200, -300, 400, -150,
-					250,
-				],
-				borderColor: "rgb(53, 162, 235)",
-				backgroundColor: "rgba(53, 162, 235, 0.5)",
-			},
-		],
-	};
+				borderWidth: 1,
+				pointRadius: 0,
+			});
+			dataset.push({
+				label: set.name + "average",
+				data: set.aver,
+
+				borderColor: "rgb(0, 99, 132)",
+				backgroundColor: "rgba(0, 99, 132, 0.5)",
+				borderWidth: 1,
+				pointRadius: 0,
+			});
+			dataset.push({
+				label: set.name + "low",
+				data: set.low,
+
+				borderColor: "rgb(0, 0, 0)",
+				backgroundColor: "rgba(0, 0, 0, 0.5)",
+				borderWidth: 1,
+				pointRadius: 0,
+			});
+		});
+		setGraphData({
+			labels: yearList,
+			datasets: dataset,
+		});
+		setShowData(true);
+		console.log({
+			labels: yearList,
+			datasets: dataset,
+		});
+	}, [data]);
 
 	/**
 	 * 추가 지역 시뮬레이션 관련 메소드
@@ -87,10 +151,10 @@ export default function Graph() {
 		);
 	};
 	return (
-		<div className="h-screen flex flex-col overflow-x-hidden">
+		<div className="flex flex-col h-screen overflow-x-hidden">
 			<Header />
-			<div className="pl-10 pr-10 bg-gray-200 grow flex flex-col overflow-y-auto">
-				<div className="flex flex-col gap-3 mt-10 w-full items-center">
+			<div className="flex flex-col pl-10 pr-10 overflow-y-auto bg-gray-200 grow">
+				<div className="flex flex-col items-center w-full gap-3 mt-10">
 					<div className="w-3/4">
 						<p className="text-3xl font-semibold text-left">대한민국 서울</p>
 					</div>
@@ -104,9 +168,9 @@ export default function Graph() {
 						handlePeriodChange={handlePeriodChange}
 						handleViewChange={handleViewChange}
 					/>
-					<GraphView data={data} />
+					{showData && <GraphView data={graphData} />}
 					<Simulation onSubmit={handleSimulationSubmit} />
-					<div className="flex flex-col gap-3 w-full flex-grow items-center">
+					<div className="flex flex-col items-center flex-grow w-full gap-3">
 						{simulationDataList.map((data: any, index: number) => (
 							<SimulationItem
 								data={data}

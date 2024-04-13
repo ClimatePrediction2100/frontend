@@ -26,14 +26,17 @@ export const options = {
 		legend: {
 			position: "right" as const,
 		},
+		tooltip: {
+			enabled: true, // 툴팁 활성화
+		},
 	},
 };
 
 const GraphView = ({ data }: any) => {
 	return (
-		<div className="bg-white w-3/4 rounded-2xl shadow-lg p-3 pl-5 flex flex-col">
+		<div className="flex flex-col w-3/4 p-3 pl-5 bg-white shadow-lg rounded-2xl">
 			<p className="text-2xl">Graph</p>
-			<div className="flex gap-10 mt-2 items-center justify-center">
+			<div className="flex items-center justify-center gap-10 mt-2">
 				<Line options={options} data={data} height={300} />
 			</div>
 		</div>
