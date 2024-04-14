@@ -36,7 +36,7 @@ export default function Graph() {
 		setSelectedView(e.target.value);
 	};
 
-	const [yearList, setYearList] = useState<any>([]);
+	const [yearList, setYearList] = useState<any>(years);
 	useEffect(() => {
 		const updatedYearList = years.filter(
 			(year) =>
@@ -58,15 +58,13 @@ export default function Graph() {
 				season: 1,
 			};
 			const response = await getData("temperature", requestData);
-
-			// 필터링 로직 적용
 			const filterDataByYear = (
 				data: TemperatureData[],
 				key: keyof TemperatureData
-			): any[] => {
+			): { year: number; value: number }[] => {
 				return data
 					.filter(({ year }) => yearList.includes(year))
-					.map(({ [key]: value }) => value as number);
+					.map(({ year, [key]: value }) => ({ year, value: value as number }));
 			};
 
 			const high: any[] = [
@@ -82,37 +80,52 @@ export default function Graph() {
 				...filterDataByYear(response.predicteds, "lowest"),
 			];
 			const name = "대한민국";
-			setData([{ name, high, aver, low }]);
+			const color = getRandomColor();
+			setData([{ name, color, high, aver, low }]);
 		};
 
-		if (yearList.length > 0) {
-			initData();
-		}
-	}, [yearList]);
+		initData();
+	}, []);
 
 	const [graphData, setGraphData] = useState<any>({});
+	function getRandomColor() {
+		const r = Math.floor(Math.random() * 256); // 0-255
+		const g = Math.floor(Math.random() * 256); // 0-255
+		const b = Math.floor(Math.random() * 256); // 0-255
+		const a = Math.random().toFixed(2); // 0.00-1.00
+		return `rgba(${r}, ${g}, ${b}, ${a})`;
+	}
 	useEffect(() => {
 		let dataset: any = [];
 		data.forEach((set: any, index: number) => {
+			const filterHigh = set.high
+				.filter((item: any) => yearList.includes(item.year))
+				.map((item: any) => item.value);
+			const filterAver = set.aver
+				.filter((item: any) => yearList.includes(item.year))
+				.map((item: any) => item.value);
+			const filterLow = set.low
+				.filter((item: any) => yearList.includes(item.year))
+				.map((item: any) => item.value);
 			dataset.push({
-				data: set.high,
-				borderColor: "rgb(0, 99, 132)",
-				backgroundColor: "rgba(0, 99, 132, 0.5)",
+				data: filterHigh,
+				borderColor: set.color,
+				backgroundColor: set.color,
 				borderWidth: 0,
 				pointRadius: 2,
 			});
 			dataset.push({
 				label: set.name,
-				data: set.aver,
-				borderColor: "rgb(0, 99, 132)",
-				backgroundColor: "rgba(0, 99, 132, 0.5)",
+				data: filterAver,
+				borderColor: set.color,
+				backgroundColor: set.color,
 				borderWidth: 1,
 				pointRadius: 2,
 			});
 			dataset.push({
-				data: set.low,
-				borderColor: "rgb(0, 99, 132)",
-				backgroundColor: "rgba(0, 99, 132, 0.5)",
+				data: filterLow,
+				borderColor: set.color,
+				backgroundColor: set.color,
 				borderWidth: 0,
 				pointRadius: 2,
 			});
@@ -122,27 +135,61 @@ export default function Graph() {
 			datasets: dataset,
 		});
 		setShowData(true);
-		console.log({
-			labels: yearList,
-			datasets: dataset,
-		});
-	}, [data]);
+	}, [data, yearList]);
 
+	useEffect(() => {
+		console.log(data);
+	}, [yearList]);
 	/**
 	 * 추가 지역 시뮬레이션 관련 메소드
 	 */
 	// Simulation 데이터 리스트를 관리할 상태
 	const [simulationDataList, setSimulationDataList] = useState<any>([]);
 
-	const handleSimulationSubmit = (newData: any) => {
-		// 새로운 데이터를 기존 리스트에 추가
+	const handleSimulationSubmit = async (newData: any) => {
+		const requestData = {
+			location: "seoul",
+			latitude: 0,
+			longitude: 0,
+			ssp: 1,
+			season: 1,
+		};
+		const response = await getData("temperature", requestData);
+		const filterDataByYear = (
+			data: TemperatureData[],
+			key: keyof TemperatureData
+		): { year: number; value: number }[] => {
+			return data.map(({ year, [key]: value }) => ({
+				year,
+				value: value as number,
+			}));
+		};
+
+		const high: any[] = [
+			...filterDataByYear(response.observeds, "average"),
+			...filterDataByYear(response.predicteds, "highest"),
+		];
+		const aver: any[] = [
+			...filterDataByYear(response.observeds, "average"),
+			...filterDataByYear(response.predicteds, "average"),
+		];
+		const low: any[] = [
+			...filterDataByYear(response.observeds, "average"),
+			...filterDataByYear(response.predicteds, "lowest"),
+		];
+		const name = "seoul";
+		const color = getRandomColor();
+		setData((prevData: any) => [...prevData, { name, color, high, aver, low }]);
+
 		setSimulationDataList((prevList: any) => [...prevList, newData]);
 	};
 
 	const handleDelete = (indexToDelete: any) => {
-		// 삭제하려는 인덱스를 제외하고 새 리스트를 생성
 		setSimulationDataList((prevList: any[]) =>
 			prevList.filter((_, index) => index !== indexToDelete)
+		);
+		setData((prevList: any[]) =>
+			prevList.filter((_, index) => index !== indexToDelete + 1)
 		);
 	};
 	return (
