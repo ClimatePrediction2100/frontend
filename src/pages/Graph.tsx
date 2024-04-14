@@ -113,24 +113,30 @@ export default function Graph() {
 					data: filterHigh,
 					borderColor: set.color,
 					backgroundColor: set.color,
+					lineTension: 0.5,
 					borderWidth: 0.5,
 					pointRadius: 1.5,
+					pointHitRadius: 3,
 				});
 				dataset.push({
 					label: `${set.name}`,
 					data: filterAver,
 					borderColor: set.color,
 					backgroundColor: set.color,
+					lineTension: 0.5,
 					borderWidth: 2,
 					pointRadius: 1.5,
+					pointHitRadius: 3,
 				});
 				dataset.push({
 					label: `${set.name} 최저`,
 					data: filterLow,
 					borderColor: set.color,
 					backgroundColor: set.color,
+					lineTension: 0.5,
 					borderWidth: 0.5,
 					pointRadius: 1.5,
+					pointHitRadius: 3,
 				});
 			} else if (selectedView === "평균 보기") {
 				dataset.push({
@@ -138,8 +144,10 @@ export default function Graph() {
 					data: filterAver,
 					borderColor: set.color,
 					backgroundColor: set.color,
+					lineTension: 0.5,
 					borderWidth: 2,
 					pointRadius: 1.5,
+					pointHitRadius: 3,
 				});
 			}
 		});
