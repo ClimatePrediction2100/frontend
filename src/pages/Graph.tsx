@@ -35,7 +35,6 @@ export default function Graph() {
 	const handleViewChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setSelectedView(e.target.value);
 	};
-
 	const [yearList, setYearList] = useState<any>(years);
 	useEffect(() => {
 		const updatedYearList = years.filter(
@@ -79,7 +78,7 @@ export default function Graph() {
 				...filterDataByYear(response.observeds, "average"),
 				...filterDataByYear(response.predicteds, "lowest"),
 			];
-			const name = "대한민국";
+			const name = "대한민국 서울";
 			const color = getRandomColor();
 			setData([{ name, color, high, aver, low }]);
 		};
@@ -92,12 +91,13 @@ export default function Graph() {
 		const r = Math.floor(Math.random() * 256); // 0-255
 		const g = Math.floor(Math.random() * 256); // 0-255
 		const b = Math.floor(Math.random() * 256); // 0-255
-		const a = Math.random().toFixed(2); // 0.00-1.00
+		const a = 1;
 		return `rgba(${r}, ${g}, ${b}, ${a})`;
 	}
 	useEffect(() => {
 		let dataset: any = [];
 		data.forEach((set: any, index: number) => {
+			// 데이터 필터링
 			const filterHigh = set.high
 				.filter((item: any) => yearList.includes(item.year))
 				.map((item: any) => item.value);
@@ -107,39 +107,51 @@ export default function Graph() {
 			const filterLow = set.low
 				.filter((item: any) => yearList.includes(item.year))
 				.map((item: any) => item.value);
-			dataset.push({
-				data: filterHigh,
-				borderColor: set.color,
-				backgroundColor: set.color,
-				borderWidth: 0,
-				pointRadius: 2,
-			});
-			dataset.push({
-				label: set.name,
-				data: filterAver,
-				borderColor: set.color,
-				backgroundColor: set.color,
-				borderWidth: 1,
-				pointRadius: 2,
-			});
-			dataset.push({
-				data: filterLow,
-				borderColor: set.color,
-				backgroundColor: set.color,
-				borderWidth: 0,
-				pointRadius: 2,
-			});
+			if (selectedView === "전체 보기") {
+				dataset.push({
+					label: `${set.name} 최고`,
+					data: filterHigh,
+					borderColor: set.color,
+					backgroundColor: set.color,
+					borderWidth: 0.5,
+					pointRadius: 1.5,
+				});
+				dataset.push({
+					label: `${set.name}`,
+					data: filterAver,
+					borderColor: set.color,
+					backgroundColor: set.color,
+					borderWidth: 2,
+					pointRadius: 1.5,
+				});
+				dataset.push({
+					label: `${set.name} 최저`,
+					data: filterLow,
+					borderColor: set.color,
+					backgroundColor: set.color,
+					borderWidth: 0.5,
+					pointRadius: 1.5,
+				});
+			} else if (selectedView === "평균 보기") {
+				dataset.push({
+					label: set.name,
+					data: filterAver,
+					borderColor: set.color,
+					backgroundColor: set.color,
+					borderWidth: 2,
+					pointRadius: 1.5,
+				});
+			}
 		});
+
+		// 그래프 데이터 설정
 		setGraphData({
 			labels: yearList,
 			datasets: dataset,
 		});
 		setShowData(true);
-	}, [data, yearList]);
+	}, [data, yearList, selectedView]);
 
-	useEffect(() => {
-		console.log(data);
-	}, [yearList]);
 	/**
 	 * 추가 지역 시뮬레이션 관련 메소드
 	 */
@@ -147,14 +159,24 @@ export default function Graph() {
 	const [simulationDataList, setSimulationDataList] = useState<any>([]);
 
 	const handleSimulationSubmit = async (newData: any) => {
-		const requestData = {
-			location: "seoul",
-			latitude: 0,
-			longitude: 0,
-			ssp: 1,
-			season: 1,
-		};
-		const response = await getData("temperature", requestData);
+		let response;
+		if (newData.selectedArea === "") {
+			const requestData = {
+				latitude: newData.latitude,
+				longitude: newData.longitude,
+				ssp: 1,
+				season: 1,
+			};
+			response = await getData("temperature", requestData);
+		} else {
+			const requestData = {
+				location: newData.selectedArea,
+				ssp: 1,
+				season: 1,
+			};
+			response = await getData("temperature", requestData);
+		}
+
 		const filterDataByYear = (
 			data: TemperatureData[],
 			key: keyof TemperatureData
@@ -177,8 +199,14 @@ export default function Graph() {
 			...filterDataByYear(response.observeds, "average"),
 			...filterDataByYear(response.predicteds, "lowest"),
 		];
-		const name = "seoul";
+		let name: any;
+		if (newData.selectedArea === "") {
+			name = `${newData.latitude}°N ${newData.longitude}°E`;
+		} else {
+			name = newData.selectedArea;
+		}
 		const color = getRandomColor();
+		newData = { ...newData, color };
 		setData((prevData: any) => [...prevData, { name, color, high, aver, low }]);
 
 		setSimulationDataList((prevList: any) => [...prevList, newData]);

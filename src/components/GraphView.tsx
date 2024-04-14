@@ -27,7 +27,9 @@ export const options = {
 			position: "right" as const,
 			labels: {
 				filter: function (legendItem: any, legend: any) {
-					return legendItem.text !== undefined;
+					return !(
+						legendItem.text.includes("최고") || legendItem.text.includes("최저")
+					);
 				},
 			},
 			onClick: (e: any, legendItem: any, legend: any) => {
