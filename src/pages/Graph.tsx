@@ -20,7 +20,7 @@ export default function Graph() {
 		(_, index) => 1850 + index
 	);
 	const unit: number[] = [1, 5, 10, 20];
-	const [selectedStartYear, setSelectedStartYear] = useState<number>(1920);
+	const [selectedStartYear, setSelectedStartYear] = useState<number>(1900);
 	const [selectedPeriod, setSelectedPeriod] = useState<number>(5);
 	const [selectedView, setSelectedView] = useState<string>("전체 보기");
 
