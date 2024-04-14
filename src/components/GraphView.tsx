@@ -50,7 +50,15 @@ export const options = {
 		tooltip: {
 			enabled: true,
 			filter: function (item: any, data: any) {
-				return item.label > 2014 || item.datasetIndex === 1;
+				console.log(item);
+				return (
+					item.label > 2014 ||
+					item.datasetIndex % 3 === 1 ||
+					!(
+						item.dataset.label.includes("최고") ||
+						item.dataset.label.includes("최저")
+					)
+				);
 			},
 		},
 	},
