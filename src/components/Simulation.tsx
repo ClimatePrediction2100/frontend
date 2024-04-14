@@ -99,6 +99,7 @@ const Simulation = ({ onSubmit }: any) => {
 					<div
 						className="select-container"
 						style={{ display: "flex", alignItems: "center" }}
+						onMouseLeave={() => setShowTooltip(false)}
 					>
 						<label className="flex items-center h-6 text-sm">SSP</label>
 						<img
@@ -106,12 +107,12 @@ const Simulation = ({ onSubmit }: any) => {
 							alt="SSP 설명"
 							className="h-5 ml-1"
 							onMouseEnter={() => setShowTooltip(true)}
-							onMouseLeave={() => setShowTooltip(false)}
 						/>
 						{showTooltip && (
 							<div className="text-white tooltip-content">
-								SSP는 8가지 상황에 의해 CO2 배출 증가에 따른 기온 상승을 가정한
-								시뮬레이션입니다.
+								SSP : 각 국의 기후변화 예측모델로 온실가스 감축 수준 및 기후변화
+								적응대책 수행 여부 등에 따라 미래 사회경제 구조가 어떻게 달라질
+								것인지 고려한 시나리오
 								<hr
 									style={{
 										marginTop: "8px",
@@ -119,14 +120,17 @@ const Simulation = ({ onSubmit }: any) => {
 										height: "4px",
 									}}
 								/>
-								<div style={{ marginBottom: "8px" }}>SSP1-1.9 :</div>
-								<div style={{ marginBottom: "8px" }}>SSP1-2.6 :</div>
-								<div style={{ marginBottom: "8px" }}>SSP2-4.5 :</div>
-								<div style={{ marginBottom: "8px" }}>SSP3-7.0 :</div>
-								<div style={{ marginBottom: "8px" }}>SSP4-3.4 :</div>
-								<div style={{ marginBottom: "8px" }}>SSP4-6.0 :</div>
-								<div style={{ marginBottom: "8px" }}>SSP5-3.4 :</div>
-								<div style={{ marginBottom: "8px" }}>SSP5-8.5 :</div>
+								<div style={{ marginBottom: "8px" }}>
+									자세한 사항은 다음 URL을 클릭하여 확인하세요
+								</div>
+								<a
+									href="https://www.weather.go.kr/w/obs-climate/climate/climate-change/climate-change-scenario.do"
+									style={{ marginBottom: "8px" }}
+									target="_blank"
+									rel="noreferrer"
+								>
+									https://www.weather.go.kr/w/obs-climate/climate/climate-change/climate-change-scenario.do
+								</a>
 							</div>
 						)}
 					</div>

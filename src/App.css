@@ -239,7 +239,7 @@ body {
 
 .tooltip-content {
 	position: absolute;
-	width: 470px;
+	width: 450px;
 	bottom: 100%;
 	left: 50%;
 	transform: translateX(-10%);
