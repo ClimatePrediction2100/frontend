@@ -6,7 +6,9 @@ export default function Header() {
 			<Link to="/">
 				<img src="/logo.png" className="h-8" alt="Logo" />
       		</Link>
+			<Link to="/">
 			<p className="text-lg ml-4">Climate Prediction 2100</p>
+			</Link>
 		</div>
 	);
 }
