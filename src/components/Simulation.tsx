@@ -4,14 +4,13 @@ import { getData } from "../api/getData";
 const Simulation = ({ onSubmit }: any) => {
 	const area = [
 		"선택 안함",
-		"대한민국 서울",
-		"미국 뉴욕",
-		"호주 캔버라",
-		"러시아 모스크바",
-		"이란 테헤란",
-		"일본 도쿄",
-		"중국 베이징",
-		"프랑스 파리",
+		"전 세계",
+		"아시아",
+		"유럽",
+		"아프리카",
+		"북아메리카",
+		"남아메리카",
+		"오세아니아",
 	];
 
 	const [selectedArea, setSelectedArea] = useState<string>("");

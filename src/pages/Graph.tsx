@@ -49,14 +49,9 @@ export default function Graph() {
 	const [showData, setShowData] = useState<boolean>(false);
 	const [data, setData] = useState<any>([]);
 	useEffect(() => {
-		const initData = async () => {
-			const requestData = {
-				latitude: 0,
-				longitude: 0,
-				ssp: 1,
-				season: 1,
-			};
-			const response = await getData("temperature", requestData);
+		const initData = async (data: any) => {
+			const name = data.location;
+			const response = await getData("temperature", data);
 			const filterDataByYear = (
 				data: TemperatureData[],
 				key: keyof TemperatureData
@@ -78,14 +73,26 @@ export default function Graph() {
 				...filterDataByYear(response.observeds, "average"),
 				...filterDataByYear(response.predicteds, "lowest"),
 			];
-			const name = "대한민국 서울";
 			const color = getRandomColor();
-			setData([{ name, color, high, aver, low }]);
+			setData((prevData: any) => [
+				...prevData,
+				{ name, color, high, aver, low },
+			]);
 		};
-
-		initData();
+		const getTwoData = async () => {
+			await initData({
+				location: "전 세계",
+				ssp: 0,
+				season: 0,
+			});
+			await initData({
+				location: "아시아",
+				ssp: 1,
+				season: 1,
+			});
+		};
+		getTwoData();
 	}, []);
-
 	const [graphData, setGraphData] = useState<any>({});
 	function getRandomColor() {
 		const r = Math.floor(Math.random() * 256); // 0-255
@@ -168,19 +175,33 @@ export default function Graph() {
 
 	const handleSimulationSubmit = async (newData: any) => {
 		let response;
+		console.log(newData);
+		const ssp = [
+			"SSP1-1.9",
+			"SSP1-2.6",
+			"SSP2-4.5",
+			"SSP3-7.0",
+			"SSP4-3.4",
+			"SSP4-6.0",
+			"SSP5-3.4",
+			"SSP5-8.5",
+		];
+		const season = ["연평균", "봄", "여름", "가을", "겨울"];
+		const selectedSsp = ssp.indexOf(newData.selectedSsp);
+		const selectedSeason = season.indexOf(newData.selectedSeason);
 		if (newData.selectedArea === "") {
 			const requestData = {
 				latitude: newData.latitude,
 				longitude: newData.longitude,
-				ssp: 1,
-				season: 1,
+				ssp: selectedSsp,
+				season: selectedSeason,
 			};
 			response = await getData("temperature", requestData);
 		} else {
 			const requestData = {
 				location: newData.selectedArea,
-				ssp: 1,
-				season: 1,
+				ssp: selectedSsp,
+				season: selectedSeason,
 			};
 			response = await getData("temperature", requestData);
 		}
@@ -228,25 +249,34 @@ export default function Graph() {
 			prevList.filter((_, index) => index !== indexToDelete + 1)
 		);
 	};
+
+	const [isVisibleWorld, setIsVisibleWorld] = useState("표시");
+	const handleIsVisibleWorld = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		setIsVisibleWorld(e.target.value);
+	};
 	return (
 		<div className="flex flex-col h-screen overflow-x-hidden">
 			<Header />
 			<div className="flex flex-col pl-10 pr-10 overflow-y-auto bg-gray-200 grow">
 				<div className="flex flex-col items-center w-full gap-3 mt-10">
 					<div className="w-3/4">
-						<p className="text-3xl font-semibold text-left">대한민국 서울</p>
+						<p className="text-3xl font-semibold text-left">아시아</p>
 					</div>
 					<Filter
 						selectedStartYear={selectedStartYear}
 						selectedPeriod={selectedPeriod}
 						selectedView={selectedView}
+						isVisibleWorld={isVisibleWorld}
 						years={years}
 						unit={unit}
 						handleStartYearChange={handleStartYearChange}
 						handlePeriodChange={handlePeriodChange}
 						handleViewChange={handleViewChange}
+						handleIsVisibleWorld={handleIsVisibleWorld}
 					/>
-					{showData && <GraphView data={graphData} />}
+					{showData && (
+						<GraphView data={graphData} isVisible={isVisibleWorld === "표시"} />
+					)}
 					<Simulation onSubmit={handleSimulationSubmit} />
 					<div className="flex flex-col items-center flex-grow w-full gap-3">
 						{simulationDataList.map((data: any, index: number) => (

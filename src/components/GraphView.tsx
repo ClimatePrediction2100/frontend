@@ -37,20 +37,19 @@ export const options = {
 				// const type = legend.chart.config.type;
 				// let ci = legend.chart;
 				// [
-				// 	ci.getDatasetMeta(0),
-				// 	ci.getDatasetMeta(1),
-				// 	ci.getDatasetMeta(2),
+				// 	ci.getDatasetMeta(index),
+				// 	ci.getDatasetMeta(index+1),
+				// 	ci.getDatasetMeta(index+2),
 				// ].forEach(function (meta) {
 				// 	meta.hidden =
 				// 		meta.hidden === null ? !ci.data.datasets[index].hidden : null;
 				// });
-				// ci.update()
+				// ci.update();
 			},
 		},
 		tooltip: {
 			enabled: true,
 			filter: function (item: any, data: any) {
-				console.log(item);
 				return (
 					item.label > 2014 ||
 					item.datasetIndex % 3 === 1 ||
@@ -64,12 +63,25 @@ export const options = {
 	},
 };
 
-const GraphView = ({ data }: any) => {
+const GraphView = ({ data, isVisible }: { data: any; isVisible: boolean }) => {
+	const processData = (datasets: any[]) => {
+		return datasets.map((dataset, index) => {
+			if (dataset.label.includes("전 세계")) {
+				return { ...dataset, hidden: !isVisible };
+			}
+			return dataset;
+		});
+	};
+
+	const processedData = {
+		labels: data.labels,
+		datasets: processData(data.datasets), // 처리된 데이터셋 사용
+	};
 	return (
 		<div className="flex flex-col w-3/4 p-3 pl-5 bg-white shadow-lg rounded-2xl">
 			<p className="text-2xl">Graph</p>
 			<div className="flex items-center justify-center gap-10 mt-2">
-				<Line options={options} data={data} height={300} />
+				<Line options={options} data={processedData} height={300} />
 			</div>
 		</div>
 	);

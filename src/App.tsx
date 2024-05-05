@@ -3,17 +3,19 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Intro from "./pages/Intro";
 import Main from "./pages/Main";
 import Graph from "./pages/Graph";
+import Resource from "./pages/Resource";
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Intro />} /> {/* 인트로 페이지 */}
-        <Route path="/main" element={<Main />} /> {/* 메인 페이지 */}
-        <Route path="/graph" element={<Graph />} /> {/* 그래프 페이지 */}
-      </Routes>
-    </Router>
-  );
+	return (
+		<Router>
+			<Routes>
+				<Route path="/" element={<Intro />} /> {/* 인트로 페이지 */}
+				<Route path="/main" element={<Main />} /> {/* 메인 페이지 */}
+				<Route path="/graph" element={<Graph />} /> {/* 그래프 페이지 */}
+				<Route path="/resource" element={<Resource />} /> {/* 리소스 페이지 */}
+			</Routes>
+		</Router>
+	);
 }
 
 export default App;
