@@ -246,7 +246,7 @@ export default function Graph() {
 			prevList.filter((_, index) => index !== indexToDelete)
 		);
 		setData((prevList: any[]) =>
-			prevList.filter((_, index) => index !== indexToDelete + 1)
+			prevList.filter((_, index) => index !== indexToDelete + 2)
 		);
 	};
 
