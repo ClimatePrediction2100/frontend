@@ -5,6 +5,7 @@ import GraphView from "../components/GraphView";
 import Simulation from "../components/Simulation";
 import SimulationItem from "../components/SimulationItem";
 import { getData } from "../api/getData";
+import { useLocation } from "react-router-dom";
 interface TemperatureData {
 	year: number;
 	average?: number;
@@ -48,10 +49,15 @@ export default function Graph() {
 
 	const [showData, setShowData] = useState<boolean>(false);
 	const [data, setData] = useState<any>([]);
+
+	const location = useLocation();
+	const queryParams = new URLSearchParams(location.search);
 	useEffect(() => {
-		const initData = async (data: any) => {
-			const name = data.location;
+		const initData = async (data: any, newName: string) => {
+			let name = data.location || `${data.latitude}°N ${data.longitude}°E`;
+			if (newName) name = newName;
 			const response = await getData("temperature", data);
+			console.log(response);
 			const filterDataByYear = (
 				data: TemperatureData[],
 				key: keyof TemperatureData
@@ -80,17 +86,54 @@ export default function Graph() {
 			]);
 		};
 		const getTwoData = async () => {
-			await initData({
-				location: "전 세계",
-				ssp: 0,
-				season: 0,
-			});
-			await initData({
-				location: "아시아",
-				ssp: 1,
-				season: 1,
-			});
+			const queryParams = new URLSearchParams(location.search);
+			const locations = queryParams.get("name");
+			const latitude = queryParams.get("latitude");
+			const longitude = queryParams.get("longitude");
+			const qssp = queryParams.get("ssp");
+			const qseason = queryParams.get("season");
+			const ssp = [
+				"SSP1-1.9",
+				"SSP1-2.6",
+				"SSP2-4.5",
+				"SSP3-7.0",
+				"SSP4-3.4",
+				"SSP4-6.0",
+				"SSP5-3.4",
+				"SSP5-8.5",
+			];
+			const season = ["연평균", "봄", "여름", "가을", "겨울"];
+			const selectedSsp = ssp.indexOf(qssp!);
+			const selectedSeason = season.indexOf(qseason!);
+
+			const data1: any = {};
+			const area = [
+				"전 세계",
+				"아시아",
+				"유럽",
+				"아프리카",
+				"북아메리카",
+				"남아메리카",
+				"오세아니아",
+			];
+			if (locations && area.includes(locations)) data1.location = locations;
+			if (latitude) data1.latitude = latitude;
+			if (longitude) data1.longitude = longitude;
+			if (ssp) data1.ssp = selectedSsp;
+			if (season) data1.season = selectedSeason;
+
+			await initData(
+				{
+					location: "전 세계",
+					ssp: 0,
+					season: 0,
+				},
+				""
+			);
+			console.log(data1);
+			await initData(data1, locations!);
 		};
+
 		getTwoData();
 	}, []);
 	const [graphData, setGraphData] = useState<any>({});
@@ -260,7 +303,16 @@ export default function Graph() {
 			<div className="flex flex-col pl-10 pr-10 overflow-y-auto bg-gray-200 grow">
 				<div className="flex flex-col items-center w-full gap-3 mt-10">
 					<div className="w-3/4">
-						<p className="text-3xl font-semibold text-left">아시아</p>
+						<p className="text-3xl font-semibold text-left">
+							{queryParams.get("name")
+								? queryParams.get("name")
+								: `${queryParams.get("latitude")}°N ${queryParams.get(
+										"longitude"
+								  )}°E`}{" "}
+							<span className="text-2xl text-gray-500">
+								{queryParams.get("ssp")}, {queryParams.get("season")}
+							</span>
+						</p>
 					</div>
 					<Filter
 						selectedStartYear={selectedStartYear}
