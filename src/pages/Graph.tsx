@@ -128,7 +128,7 @@ export default function Graph() {
 					ssp: 0,
 					season: 0,
 				},
-				""
+				"전 세계(기준)"
 			);
 			console.log(data1);
 			await initData(data1, locations!);

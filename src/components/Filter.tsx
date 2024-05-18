@@ -61,7 +61,7 @@ const Filter = ({
 					</select>
 				</div>
 				<div className="custom-select">
-					<label className="text-sm">전 세계 기온</label>
+					<label className="text-sm">전 세계(기준) 기온</label>
 					<select value={isVisibleWorld} onChange={handleIsVisibleWorld}>
 						<option value="표시">표시</option>
 						<option value="미표시">미표시</option>
