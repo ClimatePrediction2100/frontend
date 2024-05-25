@@ -11,6 +11,7 @@ const Simulation = ({ onSubmit }: any) => {
 		"북아메리카",
 		"남아메리카",
 		"오세아니아",
+		"남극"
 	];
 
 	const [selectedArea, setSelectedArea] = useState<string>("");

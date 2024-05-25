@@ -115,6 +115,7 @@ export default function Graph() {
 				"북아메리카",
 				"남아메리카",
 				"오세아니아",
+				"남극"
 			];
 			if (locations && area.includes(locations)) data1.location = locations;
 			if (latitude) data1.latitude = latitude;

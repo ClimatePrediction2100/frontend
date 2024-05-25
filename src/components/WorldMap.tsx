@@ -8,6 +8,7 @@ import mergedSouthAmerica from "../data/MergedSouthAmerica.json";
 import mergedAfrica from "../data/MergedAfrica.json";
 import mergedEurope from "../data/MergedEurope.json";
 import mergedOceania from "../data/MergedOceania.json";
+import AN from "../data/AN.json";
 import Simulation from "./Simulation";
 import MainSimulation from "./MainSimulation";
 import MainTemplate from "./MainTemplate";
@@ -28,6 +29,8 @@ const getContinentStyle = (name: string) => {
 			return { color: "#ff00ff", weight: 1, fillOpacity: 0.5 };
 		case "아시아":
 			return { color: "#00ffff", weight: 1, fillOpacity: 0.5 };
+		case "남극":
+			return { color: "#462679", weight: 1, fillOpacity: 0.5 };
 		default:
 			return { color: "#888888", weight: 1, fillOpacity: 0.5 }; // Default style for other regions
 	}
@@ -131,6 +134,7 @@ const WorldMap: React.FC = () => {
 						onEachFeature={onEachContinent}
 					/>
 					<GeoJSON data={mergedAsia as any} onEachFeature={onEachContinent} />
+					<GeoJSON data={AN as any} onEachFeature={onEachContinent} />
 				</MapContainer>
 				<div
 					className="flex flex-col items-center justify-center"
