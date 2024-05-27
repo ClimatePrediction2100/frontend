@@ -125,13 +125,12 @@ export default function Graph() {
 
 			await initData(
 				{
-					location: "전 세계",
+					location: "전 세계(기준)",
 					ssp: 0,
 					season: 0,
 				},
-				"전 세계(기준)"
+				""
 			);
-			console.log(data1);
 			await initData(data1, locations!);
 		};
 
