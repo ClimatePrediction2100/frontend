@@ -304,7 +304,7 @@ export default function Graph() {
 			<div className="flex flex-col overflow-y-auto bg-gray-200 web:px-10 grow">
 				<div className="flex flex-col items-center w-full gap-3 mt-10">
 					<div className="w-full web:w-3/4 px-20pxr web:px-0">
-						<p className="flex flex-col text-3xl font-semibold text-left web:flex-row">
+						<p className="flex flex-col items-start text-3xl font-semibold text-left web:items-center web:gap-10pxr web:flex-row">
 							{queryParams.get("name")
 								? queryParams.get("name")
 								: `${queryParams.get("latitude")}°N ${queryParams.get(

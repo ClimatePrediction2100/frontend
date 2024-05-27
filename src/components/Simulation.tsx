@@ -69,7 +69,11 @@ const Simulation = ({ onSubmit }: any) => {
 			>
 				<div className="custom-select">
 					<label className="flex items-center h-6 text-sm">지역 선택</label>
-					<select value={selectedArea} onChange={handleAreaChange}>
+					<select
+						value={selectedArea}
+						onChange={handleAreaChange}
+						className="w-full web:w-120pxr"
+					>
 						{area.map((areaOption) => (
 							<option
 								key={areaOption}
@@ -83,6 +87,7 @@ const Simulation = ({ onSubmit }: any) => {
 				<div className="flex flex-col custom-input">
 					<label className="flex items-center h-6 text-sm">위도</label>
 					<input
+						className="w-full web:w-120pxr"
 						type="text"
 						value={latitude}
 						onChange={(e) => setLatitude(e.target.value)}
@@ -92,6 +97,7 @@ const Simulation = ({ onSubmit }: any) => {
 				<div className="flex flex-col custom-input">
 					<label className="flex items-center h-6 text-sm">경도</label>
 					<input
+						className="w-full web:w-120pxr"
 						type="text"
 						value={longitude}
 						onChange={(e) => setLongitude(e.target.value)}
@@ -137,7 +143,11 @@ const Simulation = ({ onSubmit }: any) => {
 							</div>
 						)}
 					</div>
-					<select value={selectedSsp} onChange={handleSspChange}>
+					<select
+						className="w-full web:w-120pxr"
+						value={selectedSsp}
+						onChange={handleSspChange}
+					>
 						{ssp.map((sspOption) => (
 							<option key={sspOption} value={sspOption}>
 								{sspOption}
@@ -147,7 +157,11 @@ const Simulation = ({ onSubmit }: any) => {
 				</div>
 				<div className="custom-select">
 					<label className="flex items-center h-6 text-sm">계절</label>
-					<select value={selectedSeason} onChange={handleSeasonChange}>
+					<select
+						className="w-full web:w-120pxr"
+						value={selectedSeason}
+						onChange={handleSeasonChange}
+					>
 						{season.map((seasonOption) => (
 							<option key={seasonOption} value={seasonOption}>
 								{seasonOption}

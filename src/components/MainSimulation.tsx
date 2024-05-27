@@ -46,7 +46,7 @@ const MainSimulation = () => {
 				<div className="flex flex-col custom-input">
 					<label className="flex items-center h-6 text-sm">위도</label>
 					<input
-						className="w-60pxr web:w-120pxr"
+						className="w-full web:w-120pxr"
 						type="text"
 						value={latitude}
 						onChange={(e) => setLatitude(e.target.value)}
@@ -55,7 +55,7 @@ const MainSimulation = () => {
 				<div className="flex flex-col custom-input">
 					<label className="flex items-center h-6 text-sm">경도</label>
 					<input
-						className="w-60pxr web:w-120pxr"
+						className="w-full web:w-120pxr"
 						type="text"
 						value={longitude}
 						onChange={(e) => setLongitude(e.target.value)}
