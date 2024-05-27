@@ -8,7 +8,7 @@ import mergedSouthAmerica from "../data/MergedSouthAmerica.json";
 import mergedAfrica from "../data/MergedAfrica.json";
 import mergedEurope from "../data/MergedEurope.json";
 import mergedOceania from "../data/MergedOceania.json";
-import AN from "../data/AN.json";
+import mergedNam from "../data/MergedNam.json";
 import Simulation from "./Simulation";
 import MainSimulation from "./MainSimulation";
 import MainTemplate from "./MainTemplate";
@@ -106,13 +106,13 @@ const WorldMap: React.FC = () => {
 
 	return (
 		<div className="flex flex-col gap-10">
-			<div style={{ display: "flex" }}>
+			<div className="flex flex-col web:flex-row">
 				<MapContainer
 					center={[20, 0]}
 					zoom={2}
 					minZoom={2}
 					maxZoom={5}
-					style={{ height: "500px", width: "80%" }}
+					className="w-full web:w-2/3 h-500pxr"
 				>
 					<TileLayer
 						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -134,12 +134,9 @@ const WorldMap: React.FC = () => {
 						onEachFeature={onEachContinent}
 					/>
 					<GeoJSON data={mergedAsia as any} onEachFeature={onEachContinent} />
-					<GeoJSON data={AN as any} onEachFeature={onEachContinent} />
+					<GeoJSON data={mergedNam as any} onEachFeature={onEachContinent} />
 				</MapContainer>
-				<div
-					className="flex flex-col items-center justify-center"
-					style={{ width: "30%" }}
-				>
+				<div className="flex flex-col items-center justify-center w-full web:mt-0 mt-20pxr web:w-1/3">
 					<form onSubmit={handleSubmit} className="flex gap-4 mt-2">
 						<div className="flex flex-col items-center justify-center gap-10 p-4 bg-white rounded-xl">
 							<div className="text-3xl font-bold">
@@ -185,7 +182,11 @@ const WorldMap: React.FC = () => {
 											</div>
 										)}
 									</div>
-									<select value={selectedSsp} onChange={handleSspChange}>
+									<select
+										className="w-120pxr"
+										value={selectedSsp}
+										onChange={handleSspChange}
+									>
 										{ssp.map((sspOption) => (
 											<option key={sspOption} value={sspOption}>
 												{sspOption}
@@ -195,7 +196,11 @@ const WorldMap: React.FC = () => {
 								</div>
 								<div className="custom-select">
 									<label className="flex items-center h-6 text-sm">계절</label>
-									<select value={selectedSeason} onChange={handleSeasonChange}>
+									<select
+										className="w-120pxr"
+										value={selectedSeason}
+										onChange={handleSeasonChange}
+									>
 										{season.map((seasonOption) => (
 											<option key={seasonOption} value={seasonOption}>
 												{seasonOption}
@@ -210,7 +215,7 @@ const WorldMap: React.FC = () => {
 								className="h-6 mt-auto custom-button"
 								disabled={!selectedSeason && !selectedSsp}
 							>
-								<span className="text-base">예측하기</span>
+								<span className="text-base w-120pxr">예측하기</span>
 							</button>
 						</div>
 					</form>

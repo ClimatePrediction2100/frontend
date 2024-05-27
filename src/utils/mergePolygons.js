@@ -3,7 +3,7 @@ const fs = require("fs");
 const turf = require("@turf/turf");
 
 // Load the GeoJSON file
-const asia = require("../data/Oceania.json");
+const asia = require("../data/nam.json");
 
 // Extract the features (country polygons)
 const features = asia.features;
@@ -15,7 +15,7 @@ for (let i = 1; i < features.length; i++) {
 }
 
 // Add the name property to the merged feature
-mergedPolygon.properties = { name: "오세아니아" };
+mergedPolygon.properties = { name: "남극" };
 
 // Create a new GeoJSON feature collection
 const mergedGeoJSON = {
@@ -24,6 +24,6 @@ const mergedGeoJSON = {
 };
 
 // Save the merged GeoJSON to a file
-fs.writeFileSync("../data/MergedOceania.json", JSON.stringify(mergedGeoJSON));
+fs.writeFileSync("../data/MergedNam.json", JSON.stringify(mergedGeoJSON));
 
 console.log("Merged GeoJSON saved to MergedAsia.json");

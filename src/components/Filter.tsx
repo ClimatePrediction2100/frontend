@@ -24,10 +24,10 @@ const Filter = ({
 	handleIsVisibleWorld,
 }: FilterProps) => {
 	return (
-		<div className="flex flex-col w-3/4 p-3 pl-5 bg-white shadow-lg rounded-2xl">
+		<div className="flex flex-col w-full p-3 pl-5 bg-white shadow-lg web:w-3/4 rounded-2xl">
 			<p className="text-2xl">Filter</p>
-			<div className="flex gap-2 mt-2">
-				<div className="custom-select">
+			<div className="grid grid-cols-2 gap-2 mt-2 web:flex">
+				<div className="w-auto web:w-120pxr custom-select">
 					<label className="text-sm">시작 연도</label>
 					<select
 						value={selectedStartYear.toString()}
@@ -40,7 +40,7 @@ const Filter = ({
 						))}
 					</select>
 				</div>
-				<div className="custom-select">
+				<div className="w-auto web:w-120pxr custom-select">
 					<label className="text-sm">연도 단위</label>
 					<select
 						value={selectedPeriod.toString()}
@@ -53,14 +53,14 @@ const Filter = ({
 						))}
 					</select>
 				</div>
-				<div className="custom-select">
+				<div className="w-auto web:w-120pxr custom-select">
 					<label className="text-sm">보기 방식</label>
 					<select value={selectedView} onChange={handleViewChange}>
 						<option value="전체 보기">전체 보기</option>
 						<option value="평균 보기">평균 보기</option>
 					</select>
 				</div>
-				<div className="custom-select">
+				<div className="w-auto web:w-120pxr custom-select">
 					<label className="text-sm">전 세계(기준) 기온</label>
 					<select value={isVisibleWorld} onChange={handleIsVisibleWorld}>
 						<option value="표시">표시</option>

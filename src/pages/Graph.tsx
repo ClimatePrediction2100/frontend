@@ -115,7 +115,7 @@ export default function Graph() {
 				"북아메리카",
 				"남아메리카",
 				"오세아니아",
-				"남극"
+				"남극",
 			];
 			if (locations && area.includes(locations)) data1.location = locations;
 			if (latitude) data1.latitude = latitude;
@@ -299,12 +299,12 @@ export default function Graph() {
 		setIsVisibleWorld(e.target.value);
 	};
 	return (
-		<div className="flex flex-col h-screen overflow-x-hidden">
+		<div className="flex flex-col h-screen overflow-x-hidden min-w-430pxr">
 			<Header />
-			<div className="flex flex-col pl-10 pr-10 overflow-y-auto bg-gray-200 grow">
+			<div className="flex flex-col overflow-y-auto bg-gray-200 web:px-10 grow">
 				<div className="flex flex-col items-center w-full gap-3 mt-10">
-					<div className="w-3/4">
-						<p className="text-3xl font-semibold text-left">
+					<div className="w-full web:w-3/4 px-20pxr web:px-0">
+						<p className="flex flex-col text-3xl font-semibold text-left web:flex-row">
 							{queryParams.get("name")
 								? queryParams.get("name")
 								: `${queryParams.get("latitude")}°N ${queryParams.get(

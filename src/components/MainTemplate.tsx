@@ -23,7 +23,7 @@ const MainTemplate = () => {
 	return (
 		<div className="flex flex-col w-full p-3 pl-5 bg-white shadow-lg rounded-2xl">
 			<p className="mb-3 text-2xl font-bold">Template</p>
-			<div className="grid grid-cols-2 gap-x-10 gap-y-4">
+			<div className="flex flex-col web:grid web:grid-cols-2 gap-x-10 gap-y-4">
 				<div
 					className="flex justify-between w-full px-5 py-3 bg-gray-200 rounded-md cursor-pointer"
 					onClick={() => handleClickTemplate(1)}

@@ -78,7 +78,7 @@ const GraphView = ({ data, isVisible }: { data: any; isVisible: boolean }) => {
 		datasets: processData(data.datasets), // 처리된 데이터셋 사용
 	};
 	return (
-		<div className="flex flex-col w-3/4 p-3 pl-5 bg-white shadow-lg rounded-2xl">
+		<div className="flex flex-col w-full p-3 pl-5 bg-white shadow-lg web:w-3/4 rounded-2xl">
 			<p className="text-2xl">Graph</p>
 			<div className="flex items-center justify-center gap-10 mt-2">
 				<Line options={options} data={processedData} height={300} />

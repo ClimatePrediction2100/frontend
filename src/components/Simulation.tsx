@@ -11,7 +11,7 @@ const Simulation = ({ onSubmit }: any) => {
 		"북아메리카",
 		"남아메리카",
 		"오세아니아",
-		"남극"
+		"남극",
 	];
 
 	const [selectedArea, setSelectedArea] = useState<string>("");
@@ -61,9 +61,12 @@ const Simulation = ({ onSubmit }: any) => {
 	const [showTooltip, setShowTooltip] = useState(false);
 
 	return (
-		<div className="flex flex-col w-3/4 p-3 pl-5 bg-white shadow-lg rounded-2xl">
+		<div className="flex flex-col w-full p-3 pl-5 bg-white shadow-lg web:w-3/4 rounded-2xl">
 			<p className="text-2xl">추가 지역 Simulation</p>
-			<form onSubmit={handleSubmit} className="flex gap-4 mt-2">
+			<form
+				onSubmit={handleSubmit}
+				className="grid grid-cols-2 gap-4 mt-2 tablet:grid-rows-3 tablet:grid wide:flex"
+			>
 				<div className="custom-select">
 					<label className="flex items-center h-6 text-sm">지역 선택</label>
 					<select value={selectedArea} onChange={handleAreaChange}>
@@ -157,7 +160,7 @@ const Simulation = ({ onSubmit }: any) => {
 					className="h-6 mt-auto custom-button"
 					disabled={!selectedArea && (latitude === "" || longitude === "")}
 				>
-					<span className="text-base">확인</span>
+					<span className="text-base w-120pxr">확인</span>
 				</button>
 			</form>
 		</div>
