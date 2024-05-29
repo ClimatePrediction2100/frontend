@@ -167,6 +167,7 @@ export default function Graph() {
 					borderWidth: 0.5,
 					pointRadius: 1.5,
 					pointHitRadius: 3,
+					spanGaps : 10,
 				});
 				dataset.push({
 					label: `${set.name}`,
@@ -177,6 +178,7 @@ export default function Graph() {
 					borderWidth: 2,
 					pointRadius: 1.5,
 					pointHitRadius: 3,
+					spanGaps : 10,
 				});
 				dataset.push({
 					label: `${set.name} 최저`,
@@ -187,6 +189,7 @@ export default function Graph() {
 					borderWidth: 0.5,
 					pointRadius: 1.5,
 					pointHitRadius: 3,
+					spanGaps : 10,
 				});
 			} else if (selectedView === "평균 보기") {
 				dataset.push({
@@ -198,6 +201,7 @@ export default function Graph() {
 					borderWidth: 2,
 					pointRadius: 1.5,
 					pointHitRadius: 3,
+					spanGaps : 10,
 				});
 			}
 		});
