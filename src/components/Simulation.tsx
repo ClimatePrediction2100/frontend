@@ -1,47 +1,47 @@
-import { useState } from "react";
-import { getData } from "../api/getData";
+import { useState } from 'react';
+import { getData } from '../api/getData';
 
 const Simulation = ({ onSubmit }: any) => {
 	const area = [
-		"선택 안함",
-		"전 세계",
-		"아시아",
-		"유럽",
-		"아프리카",
-		"북아메리카",
-		"남아메리카",
-		"오세아니아",
-		"남극",
+		'선택 안함',
+		'전 세계',
+		'아시아',
+		'유럽',
+		'아프리카',
+		'북아메리카',
+		'남아메리카',
+		'오세아니아',
+		'남극',
 	];
 
-	const [selectedArea, setSelectedArea] = useState<string>("");
+	const [selectedArea, setSelectedArea] = useState<string>('');
 
 	const handleAreaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setLatitude("");
-		setLongitude("");
+		setLatitude('');
+		setLongitude('');
 		setSelectedArea(e.target.value);
 	};
 
-	const [latitude, setLatitude] = useState("");
-	const [longitude, setLongitude] = useState("");
+	const [latitude, setLatitude] = useState('');
+	const [longitude, setLongitude] = useState('');
 
 	const ssp = [
-		"SSP1-1.9",
-		"SSP1-2.6",
-		"SSP2-4.5",
-		"SSP3-7.0",
-		"SSP4-3.4",
-		"SSP4-6.0",
-		"SSP5-3.4",
-		"SSP5-8.5",
+		'SSP1-1.9',
+		'SSP1-2.6',
+		'SSP2-4.5',
+		'SSP3-7.0',
+		'SSP4-3.4',
+		'SSP4-6.0',
+		'SSP5-3.4',
+		'SSP5-8.5',
 	];
-	const [selectedSsp, setSelectedSsp] = useState<string>("SSP1-1.9");
+	const [selectedSsp, setSelectedSsp] = useState<string>('SSP1-1.9');
 	const handleSspChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setSelectedSsp(e.target.value);
 	};
 
-	const season = ["연평균", "봄", "여름", "가을", "겨울"];
-	const [selectedSeason, setSelectedSeason] = useState<string>("연평균");
+	const season = ['연평균', '봄', '여름', '가을', '겨울'];
+	const [selectedSeason, setSelectedSeason] = useState<string>('연평균');
 	const handleSeasonChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setSelectedSeason(e.target.value);
 	};
@@ -57,7 +57,7 @@ const Simulation = ({ onSubmit }: any) => {
 		});
 	};
 
-	const isDisabled = selectedArea !== "";
+	const isDisabled = selectedArea !== '';
 	const [showTooltip, setShowTooltip] = useState(false);
 
 	return (
@@ -72,12 +72,12 @@ const Simulation = ({ onSubmit }: any) => {
 					<select
 						value={selectedArea}
 						onChange={handleAreaChange}
-						className="w-full web:w-120pxr"
+						className="w-full wide:w-120pxr"
 					>
 						{area.map((areaOption) => (
 							<option
 								key={areaOption}
-								value={areaOption === "선택 안함" ? "" : areaOption}
+								value={areaOption === '선택 안함' ? '' : areaOption}
 							>
 								{areaOption}
 							</option>
@@ -87,7 +87,7 @@ const Simulation = ({ onSubmit }: any) => {
 				<div className="flex flex-col custom-input">
 					<label className="flex items-center h-6 text-sm">위도</label>
 					<input
-						className="w-full web:w-120pxr"
+						className="w-full wide:w-120pxr"
 						type="text"
 						value={latitude}
 						onChange={(e) => setLatitude(e.target.value)}
@@ -97,7 +97,7 @@ const Simulation = ({ onSubmit }: any) => {
 				<div className="flex flex-col custom-input">
 					<label className="flex items-center h-6 text-sm">경도</label>
 					<input
-						className="w-full web:w-120pxr"
+						className="w-full wide:w-120pxr"
 						type="text"
 						value={longitude}
 						onChange={(e) => setLongitude(e.target.value)}
@@ -107,7 +107,7 @@ const Simulation = ({ onSubmit }: any) => {
 				<div className="custom-select">
 					<div
 						className="select-container"
-						style={{ display: "flex", alignItems: "center" }}
+						style={{ display: 'flex', alignItems: 'center' }}
 						onMouseLeave={() => setShowTooltip(false)}
 					>
 						<label className="flex items-center h-6 text-sm">SSP</label>
@@ -124,17 +124,17 @@ const Simulation = ({ onSubmit }: any) => {
 								것인지 고려한 시나리오
 								<hr
 									style={{
-										marginTop: "8px",
-										marginBottom: "8px",
-										height: "4px",
+										marginTop: '8px',
+										marginBottom: '8px',
+										height: '4px',
 									}}
 								/>
-								<div style={{ marginBottom: "8px" }}>
+								<div style={{ marginBottom: '8px' }}>
 									자세한 사항은 다음 URL을 클릭하여 확인하세요
 								</div>
 								<a
 									href="https://www.weather.go.kr/w/obs-climate/climate/climate-change/climate-change-scenario.do"
-									style={{ marginBottom: "8px" }}
+									style={{ marginBottom: '8px' }}
 									target="_blank"
 									rel="noreferrer"
 								>
@@ -144,7 +144,7 @@ const Simulation = ({ onSubmit }: any) => {
 						)}
 					</div>
 					<select
-						className="w-full web:w-120pxr"
+						className="w-full wide:w-120pxr"
 						value={selectedSsp}
 						onChange={handleSspChange}
 					>
@@ -158,7 +158,7 @@ const Simulation = ({ onSubmit }: any) => {
 				<div className="custom-select">
 					<label className="flex items-center h-6 text-sm">계절</label>
 					<select
-						className="w-full web:w-120pxr"
+						className="w-full wide:w-120pxr"
 						value={selectedSeason}
 						onChange={handleSeasonChange}
 					>
@@ -172,7 +172,7 @@ const Simulation = ({ onSubmit }: any) => {
 				<button
 					type="submit"
 					className="h-6 mt-auto custom-button"
-					disabled={!selectedArea && (latitude === "" || longitude === "")}
+					disabled={!selectedArea && (latitude === '' || longitude === '')}
 				>
 					<span className="text-base w-120pxr">확인</span>
 				</button>
