@@ -114,11 +114,11 @@ export default function Graph() {
 
 			await initData(
 				{
-					location: '전 세계(기준)',
+					location: '전 세계',
 					ssp: 'SSP1-1.9',
 					season: '연평균',
 				},
-				''
+				'전 세계(기준)'
 			);
 			await initData(data1, locations!);
 		};
