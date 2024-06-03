@@ -66,7 +66,7 @@ export const options = {
 const GraphView = ({ data, isVisible }: { data: any; isVisible: boolean }) => {
 	const processData = (datasets: any[]) => {
 		return datasets.map((dataset, index) => {
-			if (dataset.label.includes('전 세계(기준)')) {
+			if (dataset.label.includes('전 세계(SSP2-4.5)')) {
 				return { ...dataset, hidden: !isVisible };
 			}
 			return dataset;
