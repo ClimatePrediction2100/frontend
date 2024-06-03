@@ -7,8 +7,8 @@ import {
 	Title,
 	Tooltip,
 	Legend,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
 
 ChartJS.register(
 	CategoryScale,
@@ -24,11 +24,11 @@ export const options = {
 	maintainAspectRatio: false,
 	plugins: {
 		legend: {
-			position: "right" as const,
+			position: 'right' as const,
 			labels: {
 				filter: function (legendItem: any, legend: any) {
 					return !(
-						legendItem.text.includes("최고") || legendItem.text.includes("최저")
+						legendItem.text.includes('최고') || legendItem.text.includes('최저')
 					);
 				},
 			},
@@ -51,11 +51,11 @@ export const options = {
 			enabled: true,
 			filter: function (item: any, data: any) {
 				return (
-					item.label > 2014 ||
+					item.label > 2023 ||
 					item.datasetIndex % 3 === 1 ||
 					!(
-						item.dataset.label.includes("최고") ||
-						item.dataset.label.includes("최저")
+						item.dataset.label.includes('최고') ||
+						item.dataset.label.includes('최저')
 					)
 				);
 			},
@@ -66,7 +66,7 @@ export const options = {
 const GraphView = ({ data, isVisible }: { data: any; isVisible: boolean }) => {
 	const processData = (datasets: any[]) => {
 		return datasets.map((dataset, index) => {
-			if (dataset.label.includes("전 세계(기준)")) {
+			if (dataset.label.includes('전 세계(기준)')) {
 				return { ...dataset, hidden: !isVisible };
 			}
 			return dataset;
