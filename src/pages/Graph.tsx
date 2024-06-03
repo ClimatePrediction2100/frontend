@@ -23,7 +23,7 @@ export default function Graph() {
 	const unit: number[] = [1, 5, 10, 20];
 	const [selectedStartYear, setSelectedStartYear] = useState<number>(1900);
 	const [selectedPeriod, setSelectedPeriod] = useState<number>(5);
-	const [selectedView, setSelectedView] = useState<string>('전체 보기');
+	const [selectedView, setSelectedView] = useState<string>('평균 보기');
 
 	const handleStartYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setSelectedStartYear(Number(e.target.value));
@@ -115,10 +115,10 @@ export default function Graph() {
 			await initData(
 				{
 					location: '전 세계',
-					ssp: 'SSP1-1.9',
+					ssp: 'SSP2-4.5',
 					season: '연평균',
 				},
-				'전 세계(기준)'
+				'전 세계(SSP2-4.5)'
 			);
 			await initData(data1, locations!);
 		};
