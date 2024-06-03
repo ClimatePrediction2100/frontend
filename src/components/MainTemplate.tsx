@@ -25,14 +25,14 @@ const MainTemplate = () => {
 			<p className="mb-3 text-2xl font-bold">Template</p>
 			<div className="flex flex-col web:grid web:grid-cols-2 gap-x-10 gap-y-4">
 				<div
-					className="flex justify-between w-full px-5 py-3 bg-gray-200 rounded-md cursor-pointer"
+					className="flex justify-between w-full px-5 py-3 bg-gray-200 rounded-md cursor-pointer hover:brightness-75 hover:scale-105 transition-transform duration-300 ease-in-out"
 					onClick={() => handleClickTemplate(1)}
 				>
 					<div>대한민국 서울 (38°N 127°E)</div>
 					<div>SSP1-2.6, 연평균</div>
 				</div>
-				<div
-					className="flex justify-between w-full px-5 py-3 bg-gray-200 rounded-md cursor-pointer"
+				<div					
+					className="flex justify-between w-full px-5 py-3 bg-gray-200 rounded-md cursor-pointer hover:brightness-75 hover:scale-105 transition-transform duration-300 ease-in-out"
 					onClick={() => {
 						handleClickTemplate(2);
 					}}
@@ -40,8 +40,8 @@ const MainTemplate = () => {
 					<div>일본 도쿄 (36°N 140°E)</div>
 					<div>SSP2-4.5, 봄</div>
 				</div>
-				<div
-					className="flex justify-between w-full px-5 py-3 bg-gray-200 rounded-md cursor-pointer"
+				<div					
+					className="flex justify-between w-full px-5 py-3 bg-gray-200 rounded-md cursor-pointer hover:brightness-75 hover:scale-105 transition-transform duration-300 ease-in-out"
 					onClick={() => {
 						handleClickTemplate(3);
 					}}
@@ -49,8 +49,8 @@ const MainTemplate = () => {
 					<div>미국 뉴욕 (41°N -74°E)</div>
 					<div>SSP3-7.0, 여름</div>
 				</div>
-				<div
-					className="flex justify-between w-full px-5 py-3 bg-gray-200 rounded-md cursor-pointer"
+				<div					
+					className="flex justify-between w-full px-5 py-3 bg-gray-200 rounded-md cursor-pointer hover:brightness-75 hover:scale-105 transition-transform duration-300 ease-in-out"
 					onClick={() => {
 						handleClickTemplate(4);
 					}}

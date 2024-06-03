@@ -6,16 +6,15 @@ import Simulation from '../components/Simulation';
 import SimulationItem from '../components/SimulationItem';
 import { getData } from '../api/getData';
 import { useLocation } from 'react-router-dom';
+import { Spinner } from '../components/Spinner';
 interface TemperatureData {
 	year: number;
 	average?: number;
 	highest?: number;
 	lowest?: number;
 }
+
 export default function Graph() {
-	/**
-	 * 그래프 관련 상태 및 메소드
-	 */
 	const years: number[] = Array.from(
 		{ length: 2100 - 1850 + 1 },
 		(_, index) => 1850 + index
@@ -24,6 +23,7 @@ export default function Graph() {
 	const [selectedStartYear, setSelectedStartYear] = useState<number>(1900);
 	const [selectedPeriod, setSelectedPeriod] = useState<number>(5);
 	const [selectedView, setSelectedView] = useState<string>('평균 보기');
+	const [loading, setLoading] = useState<boolean>(true);
 
 	const handleStartYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setSelectedStartYear(Number(e.target.value));
@@ -36,6 +36,7 @@ export default function Graph() {
 	const handleViewChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setSelectedView(e.target.value);
 	};
+
 	const [yearList, setYearList] = useState<any>(years);
 	useEffect(() => {
 		const updatedYearList = years.filter(
@@ -52,6 +53,7 @@ export default function Graph() {
 
 	const location = useLocation();
 	const queryParams = new URLSearchParams(location.search);
+
 	useEffect(() => {
 		const initData = async (data: any, newName: string) => {
 			let name = data.location || `${data.latitude}°N ${data.longitude}°E`;
@@ -86,6 +88,7 @@ export default function Graph() {
 			]);
 		};
 		const getTwoData = async () => {
+			setLoading(true);
 			const queryParams = new URLSearchParams(location.search);
 			const locations = queryParams.get('name');
 			const latitude = queryParams.get('latitude');
@@ -121,10 +124,12 @@ export default function Graph() {
 				'전 세계(SSP2-4.5)'
 			);
 			await initData(data1, locations!);
+			setLoading(false);
 		};
 
 		getTwoData();
 	}, []);
+
 	const [graphData, setGraphData] = useState<any>({});
 	function getRandomColor() {
 		const r = Math.floor(Math.random() * 256); // 0-255
@@ -133,6 +138,7 @@ export default function Graph() {
 		const a = 1;
 		return `rgba(${r}, ${g}, ${b}, ${a})`;
 	}
+	
 	useEffect(() => {
 		let dataset: any = [];
 		data.forEach((set: any, index: number) => {
@@ -203,13 +209,11 @@ export default function Graph() {
 		setShowData(true);
 	}, [data, yearList, selectedView]);
 
-	/**
-	 * 추가 지역 시뮬레이션 관련 메소드
-	 */
-	// Simulation 데이터 리스트를 관리할 상태
+	// 추가 지역 시뮬레이션 관련 메소드
 	const [simulationDataList, setSimulationDataList] = useState<any>([]);
 
 	const handleSimulationSubmit = async (newData: any) => {
+		setLoading(true);
 		let response;
 		const selectedSsp = newData.selectedSsp;
 		const selectedSeason = newData.selectedSeason;
@@ -263,6 +267,7 @@ export default function Graph() {
 		setData((prevData: any) => [...prevData, { name, color, high, aver, low }]);
 
 		setSimulationDataList((prevList: any) => [...prevList, newData]);
+		setLoading(false);
 	};
 
 	const handleDelete = (indexToDelete: any) => {
@@ -278,6 +283,7 @@ export default function Graph() {
 	const handleIsVisibleWorld = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setIsVisibleWorld(e.target.value);
 	};
+
 	return (
 		<div className="flex flex-col h-screen overflow-x-hidden min-w-430pxr">
 			<Header />
@@ -307,9 +313,18 @@ export default function Graph() {
 						handleViewChange={handleViewChange}
 						handleIsVisibleWorld={handleIsVisibleWorld}
 					/>
-					{showData && (
-						<GraphView data={graphData} isVisible={isVisibleWorld === '표시'} />
+					<div className='w-full h-96 flex flex-row items-center justify-center'>
+					{loading ? (
+						<Spinner />
+					) : (
+						showData && (
+							<GraphView
+								data={graphData}
+								isVisible={isVisibleWorld === '표시'}
+							/>
+						)
 					)}
+					</div>
 					<Simulation onSubmit={handleSimulationSubmit} />
 					<div className="flex flex-col items-center flex-grow w-full gap-3">
 						{simulationDataList.map((data: any, index: number) => (
