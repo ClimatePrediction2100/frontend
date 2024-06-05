@@ -14,7 +14,7 @@ export default function Resource() {
 						</div>
 						<div className="w-full h-full">
 							<iframe
-								src="https://www.youtube.com/embed/0TNFb5zgpbg?autoplay=1&mute=1&controls=0&loop=1&playlist=0TNFb5zgpbg"
+								src="https://youtube.com/embed/IabjwhqKuio"
 								title="YouTube video player"
 								frameBorder="0"
 								style={{ width: "100%", height: "575px" }}
@@ -40,6 +40,7 @@ export default function Resource() {
 							<a
 								//href=""
 								className="text-xl font-bold text-white web:text-4xl tablet:text-3xl wide:text-6xl"
+								target="_blank"
 							>
 								DATA
 							</a>
