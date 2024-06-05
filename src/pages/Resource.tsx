@@ -14,7 +14,7 @@ export default function Resource() {
 						</div>
 						<div className="w-full h-full">
 							<iframe
-								src="https://youtube.com/embed/IabjwhqKuio"
+								src="https://youtube.com/embed/IabjwhqKuio?autoplay=1&mute=1"
 								title="YouTube video player"
 								frameBorder="0"
 								style={{ width: "100%", height: "575px" }}
