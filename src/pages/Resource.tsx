@@ -38,7 +38,7 @@ export default function Resource() {
 						</div>
 						<div className="flex items-center justify-center w-20 h-16 bg-gray-700 tablet:w-40 web:w-60 wide:h-24 wide:w-80">
 							<a
-								//href=""
+								href="https://github.com/ClimatePrediction2100/data/releases"
 								className="text-xl font-bold text-white web:text-4xl tablet:text-3xl wide:text-6xl"
 								target="_blank"
 							>
